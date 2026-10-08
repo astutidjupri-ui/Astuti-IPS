@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jelajahi Kearifan Lokal Kepulauan Riau - IPS Kelas 9 SMP</title>
+  <style>
+    /* ==========================================================================
+       1. VARIABLES & RESET
+       ========================================================================== */
+    :root {
+      --primary: #0284c7;       /* Ocean Blue / Bahari Kepri */
+      --primary-dark: #0369a1;
+      --secondary: #d97706;     /* Gold / Melayu Kebijaksanaan */
+      --secondary-light: #fef3c7;
+      --accent: #10b981;        /* Emerald / Kelestarian */
+      --bg-main: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow: 0 4px 15px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+
+    /* ==========================================================================
+       2. NAVIGATION & LAYOUT
+       ========================================================================== */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 6px;
+      background-color: rgba(255,255,255,0.3);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: var(--secondary);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: white;
+      padding: 10px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 68px;
+      z-index: 90;
+    }
+
+    .nav-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       3. COMPONENTS & CARDS
+       ========================================================================== */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .card h2 {
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+      border-bottom: 2px solid var(--secondary-light);
+      padding-bottom: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: #b45309;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       4. SPECIFIC SECTION STYLES
+       ========================================================================== */
+    /* Beranda */
+    .hero-box {
+      text-align: center;
+      padding: 30px 15px;
+      background: linear-gradient(to bottom, #e0f2fe, var(--bg-main));
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 1.8rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .hero-svg {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      margin: 15px 0;
+    }
+
+    /* Peta SVG */
+    .map-container {
+      background: #e0f2fe;
+      border-radius: var(--radius);
+      padding: 15px;
+      text-align: center;
+      position: relative;
+    }
+
+    .map-svg {
+      width: 100%;
+      max-height: 350px;
+    }
+
+    .map-hotspot {
+      cursor: pointer;
+      transition: fill 0.2s;
+    }
+
+    .map-hotspot:hover {
+      fill: var(--secondary) !important;
+    }
+
+    /* Kartu Eksplorasi Materi */
+    .exp-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 15px;
+      background: white;
+    }
+
+    .exp-content {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    /* Tahukah Kamu (Flip / Accordion Cards) */
+    .fact-card {
+      background: white;
+      border-left: 4px solid var(--secondary);
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+
+    .fact-card .fact-answer {
+      display: none;
+      margin-top: 10px;
+      font-style: italic;
+      color: var(--primary-dark);
+      background: var(--secondary-light);
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    /* Drag and Drop Matching */
+    .matching-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .match-item {
+      padding: 12px;
+      background: #f1f5f9;
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .match-item.selected {
+      border-color: var(--primary);
+      background: #e0f2fe;
+    }
+
+    .match-item.matched {
+      background: #dcfce7;
+      border-color: var(--accent);
+      cursor: default;
+    }
+
+    /* Quiz Option Styles */
+    .quiz-option {
+      display: block;
+      padding: 10px 15px;
+      margin: 8px 0;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .quiz-option:hover {
+      background: #e2e8f0;
+    }
+
+    .quiz-option.selected {
+      background: #e0f2fe;
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .feedback-box {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .feedback-box.correct {
+      background-color: #dcfce7;
+      color: #15803d;
+    }
+
+    .feedback-box.incorrect {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    /* Sertifikat */
+    .certificate-box {
+      border: 10px double var(--secondary);
+      padding: 30px;
+      text-align: center;
+      background: #fffdfa;
+      border-radius: 8px;
+      display: none;
+      margin-top: 20px;
+    }
+
+    /* Print styling */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .certificate-box, .certificate-box * {
+        visibility: visible;
+      }
+      .certificate-box {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: 5px double #000;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .matching-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER & PROGRESS BAR -->
+  <header>
+    <h1>KEARIFAN LOKAL KEPULAUAN RIAU</h1>
+    <p>Media Pembelajaran Digital IPS Kelas 9 SMP</p>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="globalProgress"></div>
+    </div>
+  </header>
+
+  <!-- UTILITY NAVIGATION -->
+  <nav class="no-print" id="mainNav">
+    <button class="nav-btn active" onclick="switchSection('sec-beranda')">Beranda</button>
+    <button class="nav-btn" onclick="switchSection('sec-petunjuk')">Petunjuk</button>
+    <button class="nav-btn" onclick="switchSection('sec-peta')">Peta Kepri</button>
+    <button class="nav-btn" onclick="switchSection('sec-materi')">Eksplorasi</button>
+    <button class="nav-btn" onclick="switchSection('sec-fakta')">Tahukah Kamu?</button>
+    <button class="nav-btn" onclick="switchSection('sec-games')">Permainan</button>
+    <button class="nav-btn" onclick="switchSection('sec-kasus')">Studi Kasus</button>
+    <button class="nav-btn" onclick="switchSection('sec-kuis')">Kuis Evaluasi</button>
+    <button class="nav-btn" onclick="switchSection('sec-refleksi')">Refleksi & Proyek</button>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main>
+
+    <!-- 1. HALAMAN BERANDA -->
+    <section id="sec-beranda" class="section active">
+      <div class="hero-box">
+        <h2 class="hero-title">JELAJAHI KEARIFAN LOKAL KEPULAUAN RIAU</h2>
+        <p>Mata Pelajaran IPS Kelas 9 SMP | Kurikulum Merdeka</p>
+        
+        <!-- Ilustrasi SVG Gonggong & Rumah Laksamana (Simbolik Budaya Kepri) -->
+        <svg class="hero-svg" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 20 130 Q 150 100 280 130 L 280 150 L 20 150 Z" fill="#0284c7" opacity="0.6"/>
+          <!-- Perahu Layar / Lancang Kuning -->
+          <path d="M 80 110 L 140 110 L 130 125 L 90 125 Z" fill="#d97706"/>
+          <polygon points="110,110 110,60 135,100" fill="#fef3c7"/>
+          <line x1="110" y1="60" x2="110" y2="110" stroke="#78350f" stroke-width="2"/>
+          <!-- Gelombang Laut -->
+          <path d="M 10 135 Q 30 125 50 135 T 90 135 T 130 135 T 170 135 T 210 135 T 250 135 T 290 135" fill="none" stroke="#0369a1" stroke-width="3"/>
+        </svg>
+
+        <p style="font-size:0.9rem; color:var(--text-muted);">Selamat datang! Mari mengenal tradisi, nilai-nilai kemaritiman, dan kekayaan budaya Melayu di Bumi Segantang Lada.</p>
+      </div>
+
+      <div class="card">
+        <h2>Identitas Peserta Didik</h2>
+        <form id="formIdentitas" onsubmit="simpanIdentitas(event)">
+          <div class="form-group">
+            <label for="nama">Nama Lengkap:</label>
+            <input type="text" id="nama" required placeholder="Masukkan nama lengkapmu...">
+          </div>
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="kelas">Kelas:</label>
+              <input type="text" id="kelas" required placeholder="Contoh: IX A">
+            </div>
+            <div class="form-group">
+              <label for="sekolah">Asal Sekolah:</label>
+              <input type="text" id="sekolah" required placeholder="Contoh: SMPN 1 Batam">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-secondary" style="width:100%; margin-top:10px;">Mulai Belajar &amp; Jelajahi &rarr;</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- 2. PETUNJUK PENGGUNAAN -->
+    <section id="sec-petunjuk" class="section">
+      <div class="card">
+        <h2>Petunjuk Penggunaan Media</h2>
+        <p>Agar pembelajaranmu berjalan lancar dan menyenangkan, ikuti langkah-langkah berikut:</p>
+        <ol style="margin-left: 20px; margin-top: 10px; line-height: 1.8;">
+          <li><strong>Isi Data Diri:</strong> Pastikan kamu sudah mengisi nama, kelas, dan sekolah di halaman Beranda.</li>
+          <li><strong>Pelajari Secara Berurutan:</strong> Gunakan menu navigasi di atas untuk berpindah modul. Mulai dari Peta Interaktif hingga Eksplorasi Materi.</li>
+          <li><strong>Klik Tombol &amp; Kartu:</strong> Setiap kartu informasi memiliki interaksi. Klik tombol "Pelajari", "Temukan Nilainya", dan buka fakta unik.</li>
+          <li><strong>Lakukan Permainan &amp; Studi Kasus:</strong> Uji pemahaman awalmu melalui matching game dan analisis kondisi nyata.</li>
+          <li><strong>Kerjakan Kuis Evaluasi:</strong> Kerjakan 15 soal kuis di akhir pembelajaran untuk mengukur tingkat ketuntasan materi.</li>
+          <li><strong>Cetak Sertifikat &amp; Tugas Proyek:</strong> Setelah kuis selesai, kamu bisa mengunduh sertifikat dan mengerjakan tugas proyek kelompok melalui Google Dokumen.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 3. PETA INTERAKTIF KEPULAUAN RIAU -->
+    <section id="sec-peta" class="section">
+      <div class="card">
+        <h2>Jelajah Peta Kearifan Lokal Kepulauan Riau</h2>
+        <p>Klik pada titik wilayah (Hotspot) di bawah untuk menemukan kearifan lokal daerah tersebut!</p>
+        
+        <div class="map-container" style="margin-top:15px;">
+          <!-- SVG Map Sederhana Kepri -->
+          <svg class="map-svg" viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+            <rect width="500" height="300" fill="#e0f2fe" rx="10"/>
+            <!-- Simbol Pulau Batam -->
+            <path d="M 100 120 Q 130 100 150 130 T 120 160 Z" fill="#cbd5e1" stroke="#94a3b8"/>
+            <circle cx="125" cy="135" r="12" class="map-hotspot" fill="#0284c7" onclick="showMapDetail('batam')"/>
+            <text x="125" y="140" font-size="10" fill="white" text-anchor="middle" pointer-events="none">Batam</text>
+
+            <!-- Simbol Bintan & Tanjungpinang -->
+            <path d="M 180 110 Q 220 90 230 140 T 190 170 Z" fill="#cbd5e1" stroke="#94a3b8"/>
+            <circle cx="200" cy="130" r="12" class="map-hotspot" fill="#d97706" onclick="showMapDetail('bintan')"/>
+            <text x="200" y="135" font-size="9" fill="white" text-anchor="middle" pointer-events="none">Bintan/TPI</text>
+
+            <!-- Simbol Lingga -->
+            <path d="M 180 200 Q 210 190 210 230 T 170 240 Z" fill="#cbd5e1" stroke="#94a3b8"/>
+            <circle cx="190" cy="215" r="12" class="map-hotspot" fill="#10b981" onclick="showMapDetail('lingga')"/>
+            <text x="
